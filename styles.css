@@ -508,6 +508,13 @@ body::before {
   color: var(--text-secondary);
 }
 
+/* Counter Number */
+.counter-number {
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
 /* Tablet Problems */
 @media (max-width: 1024px) {
   .problems-grid {
