@@ -1158,9 +1158,7 @@ async function submitForm(){
   btn.textContent = 'Submitting…';
 
   // ── Replace this URL with your Power Automate HTTP trigger ──
-  const FLOW_URL = 'YOUR_POWER_AUTOMATE_HTTP_TRIGGER_URL_HERE';
-
-  try {
+  const FLOW_URL = 'https://default743127a4099a45da916047b014d740.b9.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/8d0184aa08ba4d268545ee4fb139bdd6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Pgh0mb-xnXg0DhALtyABU9leOBbkYlaAe_F_wPrdxAU'  try {
     const r = await fetch(FLOW_URL, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
