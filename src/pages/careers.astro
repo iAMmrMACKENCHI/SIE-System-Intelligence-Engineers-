@@ -57,7 +57,7 @@ import Footer from '../components/Footer.astro';
                 <span class="opening-type">{o.type}</span>
                 <p class="opening-desc">{o.desc}</p>
               </div>
-              <a href={`/book?role=${encodeURIComponent(o.role)}`} class="btn-outline opening-cta">Express Interest</a>
+              <a href={`../book?role=${encodeURIComponent(o.role)}`} class="btn-outline opening-cta">Express Interest</a>
             </div>
           ))}
         </div>
@@ -65,7 +65,7 @@ import Footer from '../components/Footer.astro';
         <div class="general-app">
           <p class="eyebrow" style="margin-bottom:0.75rem">Don't see your role?</p>
           <p style="font-size:0.95rem;color:#4b5563;margin:0 0 1.25rem;line-height:1.65">If you believe you think like SIE, we want to hear from you regardless of whether a specific role is listed.</p>
-          <a href="/book?type=general" class="btn-outline">Submit General Expression of Interest</a>
+          <a href="../book?type=general" class="btn-outline">Submit General Expression of Interest</a>
         </div>
       </div>
     </section>
