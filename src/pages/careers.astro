@@ -1,0 +1,241 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="Careers — SIE Systems Intelligence Engineers"
+  description="SIE hires systems thinkers, not generalists. We're looking for people who understand how real organizations work and can engineer intelligence into them."
+  canonical="https://sieconsultant.com/careers"
+>
+  <Nav activePage="careers" />
+  <main style="padding-top:64px">
+
+    <section class="page-header">
+      <div class="container">
+        <p class="eyebrow">Careers</p>
+        <h1 class="page-h1">We hire systems thinkers.</h1>
+        <p class="page-lead">Not generalists. Not AI enthusiasts. People who understand how real organizations work — and want to make them work better.</p>
+      </div>
+    </section>
+
+    <!-- Who we want -->
+    <section class="section-pad">
+      <div class="container">
+        <p class="eyebrow" style="margin-bottom:1.5rem">Who we look for</p>
+        <div class="traits-grid">
+          {[
+            { label: 'Operational intuition', desc: 'You understand that processes, not tools, are the unit of organizational performance.' },
+            { label: 'Systems thinking', desc: 'You see how parts connect. You don\'t optimize in isolation.' },
+            { label: 'Implementation bias', desc: 'You build things, not decks. You know the difference between a recommendation and a result.' },
+            { label: 'Analytical rigor', desc: 'You arrive at conclusions through evidence, not intuition alone.' },
+            { label: 'Intellectual honesty', desc: 'You tell clients what they need to hear, not what they want to hear.' },
+            { label: 'Communication precision', desc: 'You can explain a complex system simply, to an engineer and to a COO.' },
+          ].map(t => (
+            <div class="trait-card">
+              <h3 class="trait-label">{t.label}</h3>
+              <p class="trait-desc">{t.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Current openings -->
+    <section class="section-pad bg-surface">
+      <div class="container">
+        <p class="eyebrow" style="margin-bottom:1.5rem">Current openings</p>
+        <div class="openings">
+          {[
+            { role: 'Operational Intelligence Analyst', type: 'Full-time · Remote', desc: 'Map workflows, conduct operational audits, and produce the deliverables that drive client transformation. You will be the engine of Phase 1 engagements.' },
+            { role: 'AI Implementation Engineer', type: 'Full-time · Remote', desc: 'Design and build the AI-assisted systems that come out of Phase 1 audits. Strong Python and systems integration background required.' },
+          ].map(o => (
+            <div class="opening-card">
+              <div class="opening-info">
+                <h3 class="opening-role">{o.role}</h3>
+                <span class="opening-type">{o.type}</span>
+                <p class="opening-desc">{o.desc}</p>
+              </div>
+              <a href={`/book?role=${encodeURIComponent(o.role)}`} class="btn-outline opening-cta">Express Interest</a>
+            </div>
+          ))}
+        </div>
+
+        <div class="general-app">
+          <p class="eyebrow" style="margin-bottom:0.75rem">Don't see your role?</p>
+          <p style="font-size:0.95rem;color:#4b5563;margin:0 0 1.25rem;line-height:1.65">If you believe you think like SIE, we want to hear from you regardless of whether a specific role is listed.</p>
+          <a href="/book?type=general" class="btn-outline">Submit General Expression of Interest</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- What it's like -->
+    <section class="section-pad">
+      <div class="container narrow">
+        <p class="eyebrow" style="margin-bottom:1.5rem">What it's like to work here</p>
+        <div class="culture-list">
+          {[
+            'Early stage. Every person shapes how SIE works.',
+            'Real clients with real operational problems. No toy projects.',
+            'You\'ll learn more about how organizations actually function than anywhere else.',
+            'Remote-first, async where possible, synchronous when it matters.',
+            'No hierarchy tax. If your thinking is sound, it gets implemented.',
+          ].map(c => (
+            <div class="culture-item">
+              <span class="culture-dash">—</span>
+              <p class="culture-text">{c}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .container { max-width: 1100px; margin: 0 auto; }
+  .narrow { max-width: 680px; }
+
+  .page-header {
+    padding: 5rem 1.5rem 4rem;
+    background: #fafafa;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .page-h1 {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: #1a1a1a;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .page-lead {
+    font-size: 1.05rem;
+    color: #4b5563;
+    max-width: 560px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .bg-surface { background: #fafafa; }
+
+  .traits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #e5e7eb;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+  }
+
+  .trait-card {
+    background: #fff;
+    padding: 1.75rem;
+  }
+
+  .trait-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem;
+  }
+
+  .trait-desc {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Openings */
+  .openings {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .opening-card {
+    border: 1px solid #e5e7eb;
+    padding: 1.75rem 2rem;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .opening-role {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.25rem;
+  }
+
+  .opening-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    display: block;
+    margin-bottom: 0.625rem;
+  }
+
+  .opening-desc {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+    max-width: 520px;
+    line-height: 1.55;
+  }
+
+  .opening-cta { white-space: nowrap; flex-shrink: 0; }
+
+  .general-app {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 2rem;
+  }
+
+  /* Culture */
+  .culture-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .culture-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .culture-dash {
+    color: #d1d5db;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .culture-text {
+    font-size: 0.95rem;
+    color: #374151;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .traits-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .traits-grid { grid-template-columns: 1fr; }
+    .opening-card { flex-direction: column; align-items: flex-start; }
+    .page-header { padding: 4rem 1.25rem 3rem; }
+  }
+</style>

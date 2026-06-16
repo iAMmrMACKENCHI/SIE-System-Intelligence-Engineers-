@@ -1,0 +1,479 @@
+<!-- Paste discovery call booking page code here -->
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="Book a Discovery Call — SIE"
+  description="Book a 30-minute discovery call with SIE. We'll learn about your operations and tell you honestly if we can help."
+  canonical="https://sieconsultant.com/book"
+>
+  <Nav activePage="" />
+  <main style="padding-top:64px">
+
+    <section class="book-section">
+      <div class="book-grid">
+
+        <!-- Left: info -->
+        <div class="book-info">
+          <p class="eyebrow" style="margin-bottom:1rem">Discovery Call</p>
+          <h1 class="book-h1">Let's talk about your operations.</h1>
+          <p class="book-lead">A 30-minute session, no sales pitch. We ask the right questions and tell you honestly whether SIE can create measurable impact for your organization.</p>
+
+          <div class="expect-block">
+            <p class="expect-label">What to expect</p>
+            <div class="expect-list">
+              {[
+                { n: '01', t: 'Operational context', d: 'We\'ll ask about your industry, team size, and the core workflows where friction shows up.' },
+                { n: '02', t: 'Honest assessment', d: 'We\'ll tell you directly if SIE is a fit — and if not, why not.' },
+                { n: '03', t: 'Clear next step', d: 'If there\'s a fit, we\'ll outline exactly what a Phase 1 engagement would look like for your context.' },
+              ].map(e => (
+                <div class="expect-item">
+                  <span class="expect-num">{e.n}</span>
+                  <div>
+                    <strong class="expect-title">{e.t}</strong>
+                    <p class="expect-desc">{e.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="qualify-block">
+            <p class="qualify-label">This call is right for you if:</p>
+            <ul class="qualify-list">
+              <li>You lead operations, engineering, or projects (50–500 person org)</li>
+              <li>Your team coordinates critical work via email, WhatsApp, or spreadsheets</li>
+              <li>You've felt the pain of workflows that nobody fully owns</li>
+              <li>You want improvement backed by evidence, not AI hype</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <div class="book-form-wrap">
+          <div class="book-form-card">
+            <p class="form-heading">Tell us about yourself</p>
+
+            <!-- Status messages -->
+            <div id="form-success" class="form-status form-status--success" style="display:none">
+              <span class="status-icon">✓</span>
+              <div>
+                <strong>Request received.</strong>
+                <p>We'll reach out within 24 hours to confirm your discovery call.</p>
+              </div>
+            </div>
+
+            <div id="form-error" class="form-status form-status--error" style="display:none">
+              <span class="status-icon">!</span>
+              <div>
+                <strong>Something went wrong.</strong>
+                <p>Please try again or email us at <a href="mailto:hello@sieconsultant.com">hello@sieconsultant.com</a></p>
+              </div>
+            </div>
+
+            <div id="book-form">
+              <div class="field-row">
+                <div class="field">
+                  <label for="fname" class="field-label">First name <span class="required">*</span></label>
+                  <input type="text" id="fname" name="fname" class="field-input" placeholder="Arjun" required autocomplete="given-name" />
+                </div>
+                <div class="field">
+                  <label for="lname" class="field-label">Last name <span class="required">*</span></label>
+                  <input type="text" id="lname" name="lname" class="field-input" placeholder="Sharma" required autocomplete="family-name" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="email" class="field-label">Work email <span class="required">*</span></label>
+                <input type="email" id="email" name="email" class="field-input" placeholder="arjun@company.com" required autocomplete="email" />
+              </div>
+
+              <div class="field">
+                <label for="company" class="field-label">Company name <span class="required">*</span></label>
+                <input type="text" id="company" name="company" class="field-input" placeholder="Infrastructure Corp Ltd" required />
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="role" class="field-label">Your role <span class="required">*</span></label>
+                  <input type="text" id="role" name="role" class="field-input" placeholder="Operations Manager" required />
+                </div>
+                <div class="field">
+                  <label for="teamsize" class="field-label">Team size <span class="required">*</span></label>
+                  <select id="teamsize" name="teamsize" class="field-input field-select" required>
+                    <option value="" disabled selected>Select range</option>
+                    <option>10–50</option>
+                    <option>50–200</option>
+                    <option>200–500</option>
+                    <option>500+</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="industry" class="field-label">Industry</label>
+                <select id="industry" name="industry" class="field-input field-select">
+                  <option value="" disabled selected>Select industry</option>
+                  <option>Telecom Infrastructure</option>
+                  <option>Renewable Energy / EPC</option>
+                  <option>Construction & Engineering</option>
+                  <option>Manufacturing</option>
+                  <option>Logistics & Supply Chain</option>
+                  <option>Utilities</option>
+                  <option>Healthcare Operations</option>
+                  <option>Engineering Services</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="pain" class="field-label">What's your biggest operational challenge right now? <span class="required">*</span></label>
+                <textarea id="pain" name="pain" class="field-input field-textarea" rows="4" placeholder="e.g. Our engineers spend hours searching for project specs across emails and WhatsApp. Approvals take days when they should take minutes." required></textarea>
+              </div>
+
+              <div class="field">
+                <label for="phone" class="field-label">WhatsApp / Phone <span class="field-optional">(optional)</span></label>
+                <input type="tel" id="phone" name="phone" class="field-input" placeholder="+91 98765 43210" autocomplete="tel" />
+              </div>
+
+              <button type="button" id="submit-btn" class="btn-primary submit-btn">
+                <span id="btn-text">Book Discovery Session</span>
+                <span id="btn-loading" style="display:none">Sending…</span>
+              </button>
+
+              <p class="form-note">We respond within 24 hours. No spam, no automated sequences.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  // ── REPLACE THIS WITH YOUR DEPLOYED APPS SCRIPT URL ──
+  const GAS_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const btnText = document.getElementById('btn-text') as HTMLElement;
+  const btnLoading = document.getElementById('btn-loading') as HTMLElement;
+  const formEl = document.getElementById('book-form') as HTMLElement;
+  const successEl = document.getElementById('form-success') as HTMLElement;
+  const errorEl = document.getElementById('form-error') as HTMLElement;
+
+  function getVal(id: string): string {
+    return (document.getElementById(id) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)?.value?.trim() ?? '';
+  }
+
+  function showError(msg?: string) {
+    errorEl.style.display = 'flex';
+    errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    submitBtn.disabled = false;
+    btnText.style.display = '';
+    btnLoading.style.display = 'none';
+  }
+
+  submitBtn?.addEventListener('click', async () => {
+    errorEl.style.display = 'none';
+
+    const fname = getVal('fname');
+    const lname = getVal('lname');
+    const email = getVal('email');
+    const company = getVal('company');
+    const role = getVal('role');
+    const teamsize = getVal('teamsize');
+    const pain = getVal('pain');
+
+    if (!fname || !lname || !email || !company || !role || !teamsize || !pain) {
+      errorEl.querySelector('strong')!.textContent = 'Please fill in all required fields.';
+      errorEl.querySelector('p')!.textContent = '';
+      errorEl.style.display = 'flex';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoading.style.display = '';
+
+    const payload = {
+      action: 'add',
+      data: {
+        Timestamp: new Date().toISOString(),
+        'First Name': fname,
+        'Last Name': lname,
+        Email: email,
+        Company: company,
+        Role: role,
+        'Team Size': teamsize,
+        Industry: getVal('industry'),
+        'Operational Challenge': pain,
+        Phone: getVal('phone'),
+        Status: 'New',
+      },
+    };
+
+    try {
+      const res = await fetch(GAS_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) {
+        formEl.style.display = 'none';
+        successEl.style.display = 'flex';
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        showError();
+      }
+    } catch {
+      showError();
+    }
+  });
+</script>
+
+<style>
+  .book-section {
+    min-height: calc(100vh - 64px);
+    padding: 4rem 1.5rem 5rem;
+    background: #fff;
+  }
+
+  .book-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  /* Info */
+  .book-h1 {
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: #1a1a1a;
+    margin: 0.5rem 0 1rem;
+    line-height: 1.15;
+  }
+
+  .book-lead {
+    font-size: 1rem;
+    color: #4b5563;
+    line-height: 1.65;
+    margin: 0 0 2.5rem;
+  }
+
+  .expect-label, .qualify-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin: 0 0 1rem;
+    display: block;
+  }
+
+  .expect-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .expect-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .expect-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #d1d5db;
+    flex-shrink: 0;
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .expect-title {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.2rem;
+  }
+
+  .expect-desc {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .qualify-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .qualify-list li {
+    font-size: 0.875rem;
+    color: #374151;
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .qualify-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #16A34A;
+    font-weight: 700;
+  }
+
+  /* Form */
+  .book-form-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    padding: 2rem;
+  }
+
+  .form-heading {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin: 0 0 1.5rem;
+  }
+
+  /* Status */
+  .form-status {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    border-radius: 0;
+  }
+
+  .form-status--success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+  }
+
+  .form-status--error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+  }
+
+  .form-status--success .status-icon { color: #16A34A; font-size: 1rem; margin-top: 1px; }
+  .form-status--error .status-icon { color: #dc2626; font-size: 1rem; margin-top: 1px; }
+
+  .form-status strong { display: block; font-size: 0.875rem; color: #1a1a1a; margin-bottom: 0.25rem; }
+  .form-status p { font-size: 0.825rem; color: #6b7280; margin: 0; line-height: 1.5; }
+  .form-status a { color: #2563EB; }
+
+  /* Fields */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .field {
+    margin-bottom: 1rem;
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.375rem;
+    letter-spacing: 0.01em;
+  }
+
+  .required { color: #E9A800; }
+
+  .field-optional {
+    font-weight: 400;
+    color: #9ca3af;
+    font-size: 0.75rem;
+  }
+
+  .field-input {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    font-size: 0.875rem;
+    color: #1a1a1a;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .field-input:focus {
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
+  }
+
+  .field-input::placeholder { color: #9ca3af; }
+
+  .field-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.875rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  .field-textarea { resize: vertical; min-height: 100px; line-height: 1.55; }
+
+  .submit-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.95rem;
+    padding: 0.875rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .form-note {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-align: center;
+    margin: 0.75rem 0 0;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 900px) {
+    .book-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  @media (max-width: 640px) {
+    .field-row { grid-template-columns: 1fr; }
+    .book-section { padding: 3rem 1.25rem 4rem; }
+  }
+</style>

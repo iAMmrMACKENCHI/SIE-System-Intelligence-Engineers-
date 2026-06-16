@@ -1,0 +1,445 @@
+<!-- Paste your Hero component code here -->
+---
+// Hero.astro — SIE animated node network hero
+---
+
+<section class="hero-section" id="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <!-- Tooltip -->
+  <div id="node-tooltip" class="node-tooltip" aria-hidden="true"></div>
+
+  <!-- Text overlay — pointer-events:none so mouse hits canvas -->
+  <div class="hero-content">
+    <p class="hero-eyebrow">Systems Intelligence Engineers</p>
+    <h1 class="hero-h1">
+      Operational Intelligence<br />
+      for Complex Organizations
+    </h1>
+    <p class="hero-sub">
+      We study how work actually happens, identify operational
+      bottlenecks, and design intelligent systems that improve execution.
+    </p>
+    <div class="hero-actions">
+      <a href="/book" class="btn-primary">Book Discovery Session</a>
+      <a href="/services" class="btn-outline">See Our Methodology</a>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint" aria-hidden="true">
+    <span class="scroll-label">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  #hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .node-tooltip {
+    position: fixed;
+    background: #1a1a1a;
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.65rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 50;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+
+  .node-tooltip.visible { opacity: 1; }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 780px;
+    padding: 0 1.5rem;
+    pointer-events: none;
+  }
+
+  /* re-enable pointer events only on buttons */
+  .hero-actions {
+    pointer-events: all;
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin: 0 0 1.25rem;
+  }
+
+  .hero-h1 {
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: #1a1a1a;
+    margin: 0 0 1.25rem;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: #4b5563;
+    line-height: 1.65;
+    margin: 0 0 2.25rem;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .scroll-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #9ca3af;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, #9ca3af, transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.15); }
+  }
+
+  @media (max-width: 640px) {
+    .scroll-hint { display: none; }
+  }
+</style>
+
+<script>
+  (() => {
+    const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
+    const tooltip = document.getElementById('node-tooltip') as HTMLElement;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d')!;
+    const dpr = window.devicePixelRatio || 1;
+
+    const COLORS = ['#E9A800', '#2563EB', '#16A34A'];
+    const ROLES = ['Strategy','Intelligence','Execution','Operations','Systems','Analytics','Process','Design','Data'];
+    const NODE_COUNT = 18;
+    const CONNECT_DIST = 180;
+    const BG = '#f5f5f5';
+
+    let W = 0, H = 0;
+    let mouse = { x: -9999, y: -9999 };
+    let raf: number;
+    let hoveredEdge: { a: number; b: number } | null = null;
+    let signals: { a: number; b: number; t: number; start: number }[] = [];
+    let autoTimer: ReturnType<typeof setTimeout>;
+
+    interface Node {
+      x: number; y: number;
+      vx: number; vy: number;
+      color: string;
+      role: string;
+      phase: number;      // sine wave phase offset for pulse
+      baseR: number;
+      r: number;
+      pulseScale: number; // extra scale for click pulse, decays to 1
+    }
+
+    let nodes: Node[] = [];
+
+    function resize() {
+      W = canvas.offsetWidth;
+      H = canvas.offsetHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.scale(dpr, dpr);
+    }
+
+    function initNodes() {
+      nodes = Array.from({ length: NODE_COUNT }, (_, i) => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        color: COLORS[i % COLORS.length],
+        role: ROLES[i % ROLES.length],
+        phase: Math.random() * Math.PI * 2,
+        baseR: 5 + Math.random() * 3,
+        r: 5,
+        pulseScale: 1,
+      }));
+    }
+
+    // Distance from point (px,py) to segment (ax,ay)→(bx,by)
+    function distToSegment(px: number, py: number, ax: number, ay: number, bx: number, by: number): number {
+      const dx = bx - ax, dy = by - ay;
+      if (dx === 0 && dy === 0) return Math.hypot(px - ax, py - ay);
+      const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)));
+      return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
+    }
+
+    function findHoveredEdge(mx: number, my: number): { a: number; b: number } | null {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+          if (d < CONNECT_DIST) {
+            if (distToSegment(mx, my, nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y) < 8) {
+              return { a: i, b: j };
+            }
+          }
+        }
+      }
+      return null;
+    }
+
+    function fireSignal(a: number, b: number) {
+      signals.push({ a, b, t: 0, start: performance.now() });
+      // pulse both nodes
+      nodes[a].pulseScale = 1.9;
+      nodes[b].pulseScale = 1.9;
+    }
+
+    function scheduleAuto() {
+      autoTimer = setTimeout(() => {
+        // pick random connected pair
+        const pairs: [number, number][] = [];
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            if (Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y) < CONNECT_DIST) {
+              pairs.push([i, j]);
+            }
+          }
+        }
+        if (pairs.length) {
+          const [a, b] = pairs[Math.floor(Math.random() * pairs.length)];
+          fireSignal(a, b);
+        }
+        scheduleAuto();
+      }, 6000 + Math.random() * 4000);
+    }
+
+    function draw(now: number) {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = BG;
+      ctx.fillRect(0, 0, W, H);
+
+      const t = now / 1000;
+
+      // Update node physics — repel from mouse
+      for (const n of nodes) {
+        n.x += n.vx;
+        n.y += n.vy;
+
+        // Soft boundary bounce
+        if (n.x < 20) { n.vx += 0.05; }
+        if (n.x > W - 20) { n.vx -= 0.05; }
+        if (n.y < 20) { n.vy += 0.05; }
+        if (n.y > H - 20) { n.vy -= 0.05; }
+
+        // Mouse repulsion — push nodes away, never attract
+        const mdx = n.x - mouse.x;
+        const mdy = n.y - mouse.y;
+        const md = Math.hypot(mdx, mdy);
+        if (md < 140 && md > 0) {
+          const force = (140 - md) / 140 * 0.6;
+          n.vx += (mdx / md) * force;
+          n.vy += (mdy / md) * force;
+        }
+
+        // Speed cap — keep gentle
+        const speed = Math.hypot(n.vx, n.vy);
+        if (speed > 1.2) { n.vx = (n.vx / speed) * 1.2; n.vy = (n.vy / speed) * 1.2; }
+
+        // Sine pulse radius
+        n.r = n.baseR * (1 + 0.18 * Math.sin(t * 1.4 + n.phase));
+
+        // Decay click pulse
+        if (n.pulseScale > 1) {
+          n.pulseScale -= 0.04;
+          if (n.pulseScale < 1) n.pulseScale = 1;
+        }
+      }
+
+      // Draw edges
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d = Math.hypot(dx, dy);
+          if (d >= CONNECT_DIST) continue;
+
+          const isHovered = hoveredEdge && ((hoveredEdge.a === i && hoveredEdge.b === j));
+          const alpha = isHovered ? 0.85 : (1 - d / CONNECT_DIST) * 0.22;
+
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = isHovered ? `rgba(26,26,26,${alpha})` : `rgba(100,100,100,${alpha})`;
+          ctx.lineWidth = isHovered ? 2 : 1;
+          ctx.stroke();
+        }
+      }
+
+      // Draw animated signals
+      signals = signals.filter(sig => {
+        const elapsed = now - sig.start;
+        sig.t = Math.min(elapsed / 600, 1);
+        const na = nodes[sig.a], nb = nodes[sig.b];
+        const sx = na.x + (nb.x - na.x) * sig.t;
+        const sy = na.y + (nb.y - na.y) * sig.t;
+
+        // Glow trail
+        const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, 10);
+        grad.addColorStop(0, 'rgba(233,168,0,0.9)');
+        grad.addColorStop(1, 'rgba(233,168,0,0)');
+        ctx.beginPath();
+        ctx.arc(sx, sy, 10, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        return sig.t < 1;
+      });
+
+      // Draw nodes
+      for (const n of nodes) {
+        const r = n.r * n.pulseScale;
+
+        // Outer glow when pulsing
+        if (n.pulseScale > 1.1) {
+          const glow = ctx.createRadialGradient(n.x, n.y, r * 0.5, n.x, n.y, r * 2.5);
+          glow.addColorStop(0, n.color + '44');
+          glow.addColorStop(1, n.color + '00');
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, r * 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = glow;
+          ctx.fill();
+        }
+
+        // Node circle
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = n.color;
+        ctx.fill();
+
+        // White center dot
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r * 0.38, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.fill();
+      }
+
+      raf = requestAnimationFrame(draw);
+    }
+
+    // Mouse move — update mouse pos + find hovered edge
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+
+      hoveredEdge = findHoveredEdge(mouse.x, mouse.y);
+      if (hoveredEdge) {
+        canvas.style.cursor = 'pointer';
+        const na = nodes[hoveredEdge.a], nb = nodes[hoveredEdge.b];
+        tooltip.textContent = `${na.role} → ${nb.role}`;
+        tooltip.classList.add('visible');
+        tooltip.style.left = (e.clientX + 14) + 'px';
+        tooltip.style.top = (e.clientY - 28) + 'px';
+      } else {
+        canvas.style.cursor = 'default';
+        tooltip.classList.remove('visible');
+      }
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      mouse.x = -9999; mouse.y = -9999;
+      hoveredEdge = null;
+      tooltip.classList.remove('visible');
+    });
+
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const cx = e.clientX - rect.left;
+      const cy = e.clientY - rect.top;
+      const edge = findHoveredEdge(cx, cy);
+      if (edge) fireSignal(edge.a, edge.b);
+    });
+
+    // Touch support — repel on touch
+    canvas.addEventListener('touchmove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      mouse.x = touch.clientX - rect.left;
+      mouse.y = touch.clientY - rect.top;
+    }, { passive: true });
+
+    canvas.addEventListener('touchend', () => {
+      mouse.x = -9999; mouse.y = -9999;
+    });
+
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      resize();
+      raf = requestAnimationFrame(draw);
+    });
+    ro.observe(canvas.parentElement!);
+
+    resize();
+    initNodes();
+    raf = requestAnimationFrame(draw);
+    scheduleAuto();
+
+    // Cleanup on page navigation (Astro view transitions)
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(autoTimer);
+      ro.disconnect();
+    }, { once: true });
+  })();
+</script>

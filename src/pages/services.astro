@@ -1,0 +1,433 @@
+<!-- Paste services page content here -->
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="Services — SIE Systems Intelligence Engineers"
+  description="SIE's methodology: Workflow Intelligence Audits, AI Implementation Architecture, and Operational Transformation Roadmaps for complex organizations."
+  canonical="https://sieconsultant.com/services"
+>
+  <Nav activePage="services" />
+  <main style="padding-top:64px">
+
+    <section class="page-header">
+      <div class="container">
+        <p class="eyebrow">Services</p>
+        <h1 class="page-h1">How SIE works</h1>
+        <p class="page-lead">We don't arrive with a product to sell. We arrive with questions. Our methodology is designed to understand your operations before recommending anything.</p>
+      </div>
+    </section>
+
+    <!-- Engagement model -->
+    <section class="section-pad">
+      <div class="container">
+        <p class="eyebrow" style="margin-bottom:1.5rem">Our engagement model</p>
+        <h2 class="section-h2">Three phases. One goal: operational clarity.</h2>
+
+        <div class="phases">
+          <!-- Phase 1 -->
+          <div class="phase-block">
+            <div class="phase-marker" style="border-color:#2563EB">
+              <span class="phase-num" style="color:#2563EB">01</span>
+            </div>
+            <div class="phase-content">
+              <div class="phase-tag" style="color:#2563EB">Phase 1</div>
+              <h3 class="phase-title">Workflow Intelligence Audit</h3>
+              <p class="phase-desc">We map how work actually happens. Not the org chart version — the real version, with all its workarounds, WhatsApp chains, email threads, and tribal knowledge.</p>
+              <div class="phase-deliverables">
+                <p class="deliverables-label">Deliverables</p>
+                <ul class="deliverables-list">
+                  <li>Current workflow map (as-is, end-to-end)</li>
+                  <li>Friction & bottleneck analysis report</li>
+                  <li>Cognitive load & information gap assessment</li>
+                  <li>Prioritized opportunity inventory</li>
+                </ul>
+              </div>
+              <div class="phase-activities">
+                <p class="deliverables-label">Activities</p>
+                <div class="activity-tags">
+                  {['Process interviews','Workflow shadowing','Document audit','Tool inventory','Coordination mapping'].map(a => (
+                    <span class="activity-tag">{a}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2 -->
+          <div class="phase-block">
+            <div class="phase-marker" style="border-color:#E9A800">
+              <span class="phase-num" style="color:#E9A800">02</span>
+            </div>
+            <div class="phase-content">
+              <div class="phase-tag" style="color:#E9A800">Phase 2</div>
+              <h3 class="phase-title">AI Implementation Architecture</h3>
+              <p class="phase-desc">Based on the audit, we design and implement AI-assisted systems where they create measurable ROI. We don't implement AI for its own sake — only where it fits.</p>
+              <div class="phase-deliverables">
+                <p class="deliverables-label">Deliverables</p>
+                <ul class="deliverables-list">
+                  <li>AI opportunity assessment with ROI projections</li>
+                  <li>System architecture design</li>
+                  <li>Implementation plan & timeline</li>
+                  <li>Deployed, tested operational system</li>
+                </ul>
+              </div>
+              <div class="phase-activities">
+                <p class="deliverables-label">Example implementations</p>
+                <div class="activity-tags">
+                  {['Approval workflow automation','Document intelligence','Automated reporting','Field-to-office coordination','Knowledge retrieval systems','QC intelligence'].map(a => (
+                    <span class="activity-tag">{a}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 3 -->
+          <div class="phase-block">
+            <div class="phase-marker" style="border-color:#16A34A">
+              <span class="phase-num" style="color:#16A34A">03</span>
+            </div>
+            <div class="phase-content">
+              <div class="phase-tag" style="color:#16A34A">Phase 3</div>
+              <h3 class="phase-title">Operational Transformation Roadmap</h3>
+              <p class="phase-desc">A prioritized, measurable plan for the next 6–18 months — showing how your operations evolve from their current state to an intelligent, scalable system.</p>
+              <div class="phase-deliverables">
+                <p class="deliverables-label">Deliverables</p>
+                <ul class="deliverables-list">
+                  <li>Prioritized transformation roadmap</li>
+                  <li>Quick wins vs. long-term investments</li>
+                  <li>Change management considerations</li>
+                  <li>Success metrics & measurement framework</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What this is NOT -->
+    <section class="section-pad bg-surface">
+      <div class="container">
+        <p class="eyebrow" style="margin-bottom:1.5rem">Our philosophy</p>
+        <div class="philosophy-grid">
+          <div>
+            <h2 class="section-h2">AI is the enabling layer.<br/>Not the product.</h2>
+            <p class="body-text">We don't lead with AI. We lead with understanding. The right answer for a given workflow problem might be a better spreadsheet structure, a clear SOP, a simple automation, or an AI system. We recommend what fits — not what's trending.</p>
+            <p class="body-text">Our differentiation is deep understanding of operational workflows combined with precision AI implementation. Every recommendation comes with a measurable outcome tied to it.</p>
+          </div>
+          <div class="philosophy-points">
+            {[
+              { color: '#2563EB', text: 'We study before we recommend.' },
+              { color: '#E9A800', text: 'We implement with measurable outcomes.' },
+              { color: '#16A34A', text: 'We fit AI to workflows, not workflows to AI.' },
+              { color: '#2563EB', text: 'We work in weeks, not quarters.' },
+              { color: '#E9A800', text: 'We produce tangible deliverables at each phase.' },
+            ].map(p => (
+              <div class="phi-point">
+                <span class="phi-dot" style={`background:${p.color}`}></span>
+                <p class="phi-text">{p.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who it's for -->
+    <section class="section-pad">
+      <div class="container">
+        <p class="eyebrow" style="margin-bottom:1.5rem">Is this for you?</p>
+        <div class="fit-grid">
+          <div class="fit-card fit-yes">
+            <h3>This is for you if…</h3>
+            <ul>
+              <li>Your team coordinates work over WhatsApp and email</li>
+              <li>Critical knowledge lives in one person's head</li>
+              <li>You've tried AI tools and seen little real change</li>
+              <li>Approvals, reports, and follow-ups feel like constant overhead</li>
+              <li>You have 50–500 people and complex multi-team operations</li>
+              <li>You want measurable operational improvement, not demos</li>
+            </ul>
+          </div>
+          <div class="fit-card fit-no">
+            <h3>This is not for you if…</h3>
+            <ul>
+              <li>You're looking for an AI chatbot or a SaaS subscription</li>
+              <li>Your team has fewer than 15 people with simple processes</li>
+              <li>You want a quick automation fix without systems thinking</li>
+              <li>You're not willing to give SIE access to your real workflows</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section-pad cta-dark">
+      <div class="container" style="text-align:center;max-width:580px;margin:0 auto">
+        <p class="eyebrow" style="color:#6b7280;margin-bottom:1rem">Start with a conversation</p>
+        <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:800;color:#fff;margin:0 0 1rem;letter-spacing:-0.02em">Book a Discovery Call</h2>
+        <p style="color:#9ca3af;font-size:0.95rem;line-height:1.65;margin:0 0 2rem">30 minutes. We'll ask about your operations and tell you honestly if SIE can help — and what that would look like.</p>
+        <a href="/book" class="btn-primary">Book Discovery Session</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .page-header {
+    padding: 5rem 1.5rem 4rem;
+    background: #fafafa;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .page-h1 {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: #1a1a1a;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .page-lead {
+    font-size: 1.05rem;
+    color: #4b5563;
+    max-width: 560px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .section-h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    margin: 0 0 1.25rem;
+    line-height: 1.2;
+  }
+
+  .body-text {
+    font-size: 1rem;
+    color: #4b5563;
+    line-height: 1.75;
+    margin: 0 0 1.25rem;
+  }
+
+  .bg-surface { background: #fafafa; }
+
+  /* Phases */
+  .phases {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+  }
+
+  .phase-block {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #e5e7eb;
+    background: #fff;
+  }
+
+  .phase-block:last-child { border-bottom: none; }
+
+  .phase-marker {
+    width: 80px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #e5e7eb;
+    border-left: 4px solid;
+    padding: 2rem 1rem;
+  }
+
+  .phase-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .phase-content {
+    padding: 2rem 2.5rem;
+    flex: 1;
+  }
+
+  .phase-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .phase-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem;
+  }
+
+  .phase-desc {
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.65;
+    margin: 0 0 1.5rem;
+    max-width: 600px;
+  }
+
+  .deliverables-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin: 0 0 0.5rem;
+  }
+
+  .deliverables-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .deliverables-list li {
+    font-size: 0.875rem;
+    color: #374151;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .deliverables-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #d1d5db;
+  }
+
+  .activity-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .activity-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.625rem;
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    font-weight: 500;
+  }
+
+  /* Philosophy */
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .philosophy-points {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .phi-point {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .phi-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .phi-text {
+    font-size: 1rem;
+    color: #1a1a1a;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Fit grid */
+  .fit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .fit-card {
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+  }
+
+  .fit-yes { border-top: 3px solid #16A34A; }
+  .fit-no { border-top: 3px solid #e5e7eb; }
+
+  .fit-card h3 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .fit-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .fit-yes li::before { content: '✓ '; color: #16A34A; font-weight: 700; }
+  .fit-no li::before { content: '✕ '; color: #d1d5db; font-weight: 700; }
+
+  .fit-card li {
+    font-size: 0.875rem;
+    color: #4b5563;
+    line-height: 1.55;
+  }
+
+  .cta-dark {
+    background: #1a1a1a;
+    padding: 5rem 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .philosophy-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .fit-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .phase-block { flex-direction: column; }
+    .phase-marker { width: 100%; height: 56px; border-left: none; border-bottom: 4px solid; border-right: none; flex-direction: row; justify-content: flex-start; padding: 0 1.5rem; gap: 1rem; }
+    .phase-content { padding: 1.5rem; }
+    .page-header { padding: 4rem 1.25rem 3rem; }
+  }
+</style>
