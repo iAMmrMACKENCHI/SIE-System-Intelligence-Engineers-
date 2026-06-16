@@ -1,6 +1,7 @@
 <!-- Paste your Hero component code here -->
 ---
 // Hero.astro — SIE animated node network hero
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <section class="hero-section" id="hero">
@@ -21,8 +22,8 @@
       bottlenecks, and design intelligent systems that improve execution.
     </p>
     <div class="hero-actions">
-      <a href="../book" class="btn-primary">Book Discovery Session</a>
-      <a href="../services" class="btn-outline">See Our Methodology</a>
+      <a href={`${baseUrl}book/`} class="btn-primary">Book Discovery Session</a>
+      <a href={`${baseUrl}services/`} class="btn-outline">See Our Methodology</a>
     </div>
   </div>
 

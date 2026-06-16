@@ -3,6 +3,8 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Base
@@ -173,7 +175,7 @@ import Footer from '../components/Footer.astro';
         <p class="eyebrow" style="color:#6b7280;margin-bottom:1rem">Start with a conversation</p>
         <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:800;color:#fff;margin:0 0 1rem;letter-spacing:-0.02em">Book a Discovery Call</h2>
         <p style="color:#9ca3af;font-size:0.95rem;line-height:1.65;margin:0 0 2rem">30 minutes. We'll ask about your operations and tell you honestly if SIE can help — and what that would look like.</p>
-        <a href="../book" class="btn-primary">Book Discovery Session</a>
+        <a href={`${baseUrl}book/`} class="btn-primary">Book Discovery Session</a>
       </div>
     </section>
 

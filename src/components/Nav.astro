@@ -3,17 +3,18 @@ interface Props {
   activePage?: string;
 }
 const { activePage = '' } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <nav class="navbar">
   <div class="nav-container">
-    <a href="../" class="nav-logo">SIE</a>
+    <a href={baseUrl} class="nav-logo">SIE</a>
     <ul class="nav-menu">
-      <li><a href="../" class={activePage === 'home' ? 'active' : ''}>Home</a></li>
-      <li><a href="../about" class={activePage === 'about' ? 'active' : ''}>About</a></li>
-      <li><a href="../services" class={activePage === 'services' ? 'active' : ''}>Services</a></li>
-      <li><a href="../careers" class={activePage === 'careers' ? 'active' : ''}>Careers</a></li>
-      <li><a href="../book" class="nav-cta">Book Call</a></li>
+      <li><a href={baseUrl} class={activePage === 'home' ? 'active' : ''}>Home</a></li>
+      <li><a href={`${baseUrl}about/`} class={activePage === 'about' ? 'active' : ''}>About</a></li>
+      <li><a href={`${baseUrl}services/`} class={activePage === 'services' ? 'active' : ''}>Services</a></li>
+      <li><a href={`${baseUrl}careers/`} class={activePage === 'careers' ? 'active' : ''}>Careers</a></li>
+      <li><a href={`${baseUrl}book/`} class="nav-cta">Book Call</a></li>
     </ul>
   </div>
 </nav>
