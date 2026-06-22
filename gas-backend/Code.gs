@@ -5,7 +5,7 @@
 // Deploy as: Web App > Execute as: Me > Anyone can access
 // ════════════════════════════════════════════════════════
 
-const SPREADSHEET_ID = 'YOUR_GOOGLE_SHEET_ID'; // ← paste your Sheet ID here
+const SPREADSHEET_ID = '1024G7KeSjmeQz8sj9X157xtNfVRT30inBkPUwk9D7ug'; // ← paste your Sheet ID here
 const SHEET_NAME = 'Discovery Calls';
 
 function getSheet() {
