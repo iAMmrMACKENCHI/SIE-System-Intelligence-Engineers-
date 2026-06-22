@@ -36,6 +36,9 @@ function ensureHeaders() {
 }
 
 // ── doPost: handle form submissions from SIEconsultant.com ──
+// 1. Replace SPREADSHEET_ID with your Google Sheet ID.
+// 2. Deploy the script as a web app: Execute as Me, Anyone with the link.
+// 3. Copy the web app URL and paste it into GAS_URL in src/pages/book.astro.
 function doPost(e) {
   try {
     const payload = JSON.parse(e.postData.contents);

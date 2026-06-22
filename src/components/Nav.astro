@@ -8,7 +8,10 @@ const baseUrl = import.meta.env.BASE_URL;
 
 <nav class="navbar">
   <div class="nav-container">
-    <a href={baseUrl} class="nav-logo">SIE</a>
+    <a href={baseUrl} class="nav-logo">
+      <img src={`${baseUrl}images/logo.svg`} alt="SIE logo" />
+      <span>SIE</span>
+    </a>
     <ul class="nav-menu">
       <li><a href={baseUrl} class={activePage === 'home' ? 'active' : ''}>Home</a></li>
       <li><a href={`${baseUrl}about/`} class={activePage === 'about' ? 'active' : ''}>About</a></li>
@@ -29,7 +32,9 @@ const baseUrl = import.meta.env.BASE_URL;
     z-index: 100;
   }
   .nav-container { max-width: 1100px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-  .nav-logo { font-weight: 800; font-size: 1.25rem; color: #1a1a1a; text-decoration: none; }
+  .nav-logo { display: inline-flex; align-items: center; gap: 0.75rem; font-weight: 800; font-size: 1.25rem; color: #1a1a1a; text-decoration: none; }
+  .nav-logo img { width: 2rem; height: 2rem; display: block; }
+  .nav-logo span { display: inline-block; letter-spacing: -0.02em; }
   .nav-menu { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
   .nav-menu a { text-decoration: none; color: #4b5563; font-size: 0.9rem; transition: color 0.2s; }
   .nav-menu a.active, .nav-menu a:hover { color: #E9A800; }

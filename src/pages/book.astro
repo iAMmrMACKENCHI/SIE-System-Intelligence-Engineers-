@@ -74,7 +74,7 @@ import Footer from '../components/Footer.astro';
               </div>
             </div>
 
-            <div id="book-form">
+            <form id="book-form" novalidate>
               <div class="field-row">
                 <div class="field">
                   <label for="fname" class="field-label">First name <span class="required">*</span></label>
@@ -139,13 +139,13 @@ import Footer from '../components/Footer.astro';
                 <input type="tel" id="phone" name="phone" class="field-input" placeholder="+91 98765 43210" autocomplete="tel" />
               </div>
 
-              <button type="button" id="submit-btn" class="btn-primary submit-btn">
+              <button type="submit" id="submit-btn" class="btn-primary submit-btn">
                 <span id="btn-text">Book Discovery Session</span>
                 <span id="btn-loading" style="display:none">Sending…</span>
               </button>
 
               <p class="form-note">We respond within 24 hours. No spam, no automated sequences.</p>
-            </div>
+            </form>
           </div>
         </div>
 
@@ -163,7 +163,7 @@ import Footer from '../components/Footer.astro';
   const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
   const btnText = document.getElementById('btn-text') as HTMLElement;
   const btnLoading = document.getElementById('btn-loading') as HTMLElement;
-  const formEl = document.getElementById('book-form') as HTMLElement;
+  const formEl = document.getElementById('book-form') as HTMLFormElement;
   const successEl = document.getElementById('form-success') as HTMLElement;
   const errorEl = document.getElementById('form-error') as HTMLElement;
 
@@ -171,7 +171,9 @@ import Footer from '../components/Footer.astro';
     return (document.getElementById(id) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)?.value?.trim() ?? '';
   }
 
-  function showError(msg?: string) {
+  function showError(message = 'Please try again or email us at hello@sieconsultant.com') {
+    errorEl.querySelector('strong')!.textContent = 'Something went wrong.';
+    errorEl.querySelector('p')!.textContent = message;
     errorEl.style.display = 'flex';
     errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     submitBtn.disabled = false;
@@ -179,7 +181,8 @@ import Footer from '../components/Footer.astro';
     btnLoading.style.display = 'none';
   }
 
-  submitBtn?.addEventListener('click', async () => {
+  formEl?.addEventListener('submit', async (event) => {
+    event.preventDefault();
     errorEl.style.display = 'none';
 
     const fname = getVal('fname');
@@ -191,9 +194,10 @@ import Footer from '../components/Footer.astro';
     const pain = getVal('pain');
 
     if (!fname || !lname || !email || !company || !role || !teamsize || !pain) {
-      errorEl.querySelector('strong')!.textContent = 'Please fill in all required fields.';
+      errorEl.querySelector('strong')!.textContent = 'Please complete all required fields.';
       errorEl.querySelector('p')!.textContent = '';
       errorEl.style.display = 'flex';
+      errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
@@ -221,6 +225,7 @@ import Footer from '../components/Footer.astro';
     try {
       const res = await fetch(GAS_URL, {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
       const data = await res.json();
@@ -229,10 +234,11 @@ import Footer from '../components/Footer.astro';
         successEl.style.display = 'flex';
         successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
-        showError();
+        showError(data.error ? data.error : undefined);
       }
-    } catch {
-      showError();
+    } catch (err) {
+      showError('Network error. Please refresh and try again.');
+      console.error(err);
     }
   });
 </script>
